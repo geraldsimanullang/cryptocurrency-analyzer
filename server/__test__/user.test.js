@@ -5,7 +5,7 @@ const { hash } = require("../helpers/bcryptjs");
 
 beforeAll(async () => {
   require("dotenv").config();
-  const hashedPassword = hash(process.env.ADMIN_PASS);
+  const hashedPassword = hash("password");
 
   const admin = [
     {
@@ -101,7 +101,7 @@ describe("POST /login", () => {
     test("meet all requirements", async () => {
       const response = await request(app).post("/login").send({
         email: "geraldsimanullang@gmail.com",
-        password: process.env.ADMIN_PASS,
+        password: "password",
       });
 
       expect(response.status).toBe(200);
@@ -134,7 +134,7 @@ describe("POST /login", () => {
     test("unregistered email", async () => {
       const response = await request(app).post("/login").send({
         email: "thisemailisnotregistered@mail.com",
-        password: process.env.ADMIN_PASS,
+        password: "password"
       });
 
       expect(response.status).toBe(401);

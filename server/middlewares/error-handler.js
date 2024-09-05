@@ -3,8 +3,6 @@ module.exports = {
     let status = 500;
     let message = "Internal server error";
 
-    console.log(error)
-
     if (
       error.name === "SequelizeValidationError" ||
       error.name === "SequelizeUniqueConstraintError"
