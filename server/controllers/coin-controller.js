@@ -65,7 +65,7 @@ class CoinController {
         };
 
         const { data } = await axios.get(url, options);
-        console.log(data)
+
         await Data.create({
           UserId: id,
           CoinId: coin.id,
@@ -93,7 +93,7 @@ class CoinController {
       });
 
       const generationConfig = {
-        temperature: 1.2,
+        temperature: 1,
         topP: 0.95,
         topK: 64,
         maxOutputTokens: 8192,
@@ -166,8 +166,6 @@ class CoinController {
       }
 
       const analysis = await run(prompt);
-      // console.log(preprocessedPrices)
-      console.log(analysis)
 
       res.status(200).json(analysis);
     } catch (error) {

@@ -14,7 +14,7 @@ export default function Home() {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
       });
-      console.log(data);
+
       setCoins(data);
     } catch (error) {
       console.log(error);

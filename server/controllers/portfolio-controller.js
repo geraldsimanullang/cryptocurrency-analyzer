@@ -59,6 +59,39 @@ class PortfolioController {
       next(error);
     }
   }
+
+  static async editNotes(req, res, next) {
+    try {
+      const { portfolioId } = req.params
+
+      const { notes } = req.body
+
+      await Portfolio.update({notes: notes}, {
+        where: {
+          id: portfolioId
+        }
+      })
+
+      res.status(200).json()
+
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  static async deletePortfolio(req, res, next) {
+    try {
+      const { portfolioId } = req.params
+
+      await Portfolio.destroy({
+        where: {
+          id: portfolioId
+        }
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = PortfolioController;

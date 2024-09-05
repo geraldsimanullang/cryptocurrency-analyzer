@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHistoricalData } from "../features/historical-data-slicer";
 import Navbar from "../components/Navbar";
@@ -37,6 +37,24 @@ export default function Detail() {
       setCoin(data);
     } catch (error) {
       console.log(error);
+    }
+  }
+  const navigate = useNavigate()
+
+  async function addPortfolio(event) {
+    try {
+      event.preventDefault()
+
+      const { data } = await axios.post(`http://localhost:3000/portfolio/${name}`, {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`
+        }
+      })
+
+      navigate("/my-portfolio")
+      
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -88,7 +106,7 @@ export default function Detail() {
             <p className="text-slate-500 text-xs">{coin.symbol}</p>
           </div>
           <div className="flex flex-col items-center gap-2">
-            <button className="btn btn-primary btn-sm w-40">
+            <button className="btn btn-primary btn-sm w-40" onClick={(event) => addPortfolio(event)}>
               Add to My Portfolio
             </button>
             <button

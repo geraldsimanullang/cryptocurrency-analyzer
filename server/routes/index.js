@@ -23,6 +23,8 @@ router.post("/coins/:name/analysis/", CoinController.runGeminiAnalysis);
 const PortfolioController = require("../controllers/portfolio-controller");
 router.get("/my-portfolio", PortfolioController.fetchMyPortfolio);
 router.post("/portfolio/:name", PortfolioController.addPortofolio);
+router.patch("/portfolio/:portfolioId", PortfolioController.editNotes);
+router.delete("/portfolio/:portfolioId", PortfolioController.deletePortfolio);
 
 // --- Error handler ---
 const { handleError } = require("../middlewares/error-handler");
