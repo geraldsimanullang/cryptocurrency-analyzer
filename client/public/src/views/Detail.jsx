@@ -5,11 +5,12 @@ import { fetchHistoricalData } from "../features/historical-data-slicer";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import PriceChart from "../components/PriceChart";
+import analyzingAnimation from "../assets/analyzingAnimation.svg"
 
 export default function Detail() {
   const [coin, setCoin] = useState({});
   const [showChart, setShowChart] = useState(false);
-  const [analysing, setAnalysing] = useState(false)
+  const [analyzing, setAnalyzing] = useState(false)
   const [rawAIAnalysis, setRawAIAnalysis] = useState("");
   const [nameAIAnalysis, setNameAIAnalysis] = useState("");
   const [fromAIAnalysis, setFromAIAnalysis] = useState("");
@@ -41,7 +42,7 @@ export default function Detail() {
 
   async function getAIAnalysis() {
     try {
-      setAnalysing(true)
+      setAnalyzing(true)
       const dataInJson = JSON.stringify(data);
       const body = { dataInJson };
       const response = await axios.post(
@@ -68,7 +69,7 @@ export default function Detail() {
     } catch (error) {
       console.log(error);
     } finally {
-      setAnalysing(false)
+      setAnalyzing(false)
     }
   }
 
@@ -108,20 +109,26 @@ export default function Detail() {
           </div>
         </div>
         <div className="w-3/4 flex flex-col items-center">
-          <div className="w-full flex justify-end">
+          <div className="w-full flex justify-end mb-3">
             {data?.prices && showChart && <PriceChart />}
           </div>
-          {rawAIAnalysis && 
-          <div>
-            <p className="text-wrap text-black"><span className="font-semibold">Coin Name:</span> {nameAIAnalysis}</p>
-            <p className="text-wrap text-black"><span className="font-semibold">Date Range:</span> {fromAIAnalysis} - {toAIAnalysis}</p>
-            <p className="text-wrap text-black mt-2 font-semibold">Performance Analysis:</p>
-            <p className="text-wrap text-black">{performanceAIAnalysis}</p>
-            <p className="text-wrap text-black mt-2 font-semibold">Prediction:</p>
-            <p className="text-wrap text-black">{predictionAIAnalysis}</p>
-            <p className="text-wrap text-black mt-2 font-semibold">Recommendation:</p>
-            <p className="text-wrap text-black">{recommendationAIAnalysis}</p>
-          </div>}
+          { analyzing &&
+            <div className="flex flex-col w-full items-center">
+              <img src={analyzingAnimation} className="w-16"/>
+              <p className="text-black text-sm">Analyzing...</p>
+            </div>
+          }
+          {rawAIAnalysis &&
+            <div>
+              <p className="text-wrap text-black"><span className="font-semibold">Coin Name:</span> {nameAIAnalysis}</p>
+              <p className="text-wrap text-black"><span className="font-semibold">Date Range:</span> {fromAIAnalysis} - {toAIAnalysis}</p>
+              <p className="text-wrap text-black mt-2 font-semibold">Performance Analysis:</p>
+              <p className="text-wrap text-black">{performanceAIAnalysis}</p>
+              <p className="text-wrap text-black mt-2 font-semibold">Prediction:</p>
+              <p className="text-wrap text-black">{predictionAIAnalysis}</p>
+              <p className="text-wrap text-black mt-2 font-semibold">Recommendation:</p>
+              <p className="text-wrap text-black">{recommendationAIAnalysis}</p>
+            </div>}
         </div>
       </div>
     </div>
