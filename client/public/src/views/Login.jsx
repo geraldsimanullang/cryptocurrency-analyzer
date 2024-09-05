@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from '@react-oauth/google';
 
 export default function Login() {
@@ -53,6 +53,7 @@ export default function Login() {
           className="flex flex-col rounded-lg border-yellow-500 border-2 bg-white shadow-lg items-center p-8 h-fit w-fit gap-5"
           onSubmit={(event) => handleLogin(event)}
         >
+          
           <div className="flex flex-col">
             <label htmlFor="email" className="text-gray-700 font-semibold">
               Email
@@ -80,6 +81,10 @@ export default function Login() {
           <button className="btn btn-warning bg-yellow-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-yellow-600 transition duration-300 ease-in-out">
             Log In
           </button>
+          <div className="flex gap-1">
+            <p className="text-black text-xs">Don't have account yet? </p>
+            <Link to="/register" className="text-blue-600 text-xs">Register</Link>
+          </div>
           <div className="divider px-10 text-gray-800">OR</div>
           <GoogleLogin onSuccess={googleLogin} />
         </form>
