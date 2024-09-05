@@ -9,7 +9,14 @@ import PriceChart from "../components/PriceChart";
 export default function Detail() {
   const [coin, setCoin] = useState({});
   const [showChart, setShowChart] = useState(false);
-  const [AIAnalysis, setAIAnalysis] = useState("");
+  const [analysing, setAnalysing] = useState(false)
+  const [rawAIAnalysis, setRawAIAnalysis] = useState("");
+  const [nameAIAnalysis, setNameAIAnalysis] = useState("");
+  const [fromAIAnalysis, setFromAIAnalysis] = useState("");
+  const [toAIAnalysis, setToAIAnalysis] = useState("");
+  const [performanceAIAnalysis, setPerformanceAIAnalysis] = useState("");
+  const [predictionAIAnalysis, setPredictionAIAnalysis] = useState("");
+  const [recommendationAIAnalysis, setRecommendationAIAnalysis] = useState("");
 
   const { name } = useParams();
 
@@ -34,6 +41,7 @@ export default function Detail() {
 
   async function getAIAnalysis() {
     try {
+      setAnalysing(true)
       const dataInJson = JSON.stringify(data);
       const body = { dataInJson };
       const response = await axios.post(
@@ -46,9 +54,21 @@ export default function Detail() {
         }
       );
 
-      setAIAnalysis(response.data);
+      setRawAIAnalysis(response.data);
+
+      const parsedAnalysis = JSON.parse(response.data)
+
+      setNameAIAnalysis(parsedAnalysis.name)
+      setFromAIAnalysis(parsedAnalysis.from)
+      setToAIAnalysis(parsedAnalysis.to)
+      setPerformanceAIAnalysis(parsedAnalysis.performance)
+      setPredictionAIAnalysis(parsedAnalysis.prediction)
+      setRecommendationAIAnalysis(parsedAnalysis.recommendation)
+
     } catch (error) {
       console.log(error);
+    } finally {
+      setAnalysing(false)
     }
   }
 
@@ -57,7 +77,7 @@ export default function Detail() {
   }, []);
 
   return (
-    <div className="h-screen w-screen bg-slate-50">
+    <div className="min-h-screen w-screen bg-slate-100">
       <Navbar />
       <div className="flex h-full w-full px-5 py-5 gap-10">
         <div className="flex flex-col items-center gap-3">
@@ -79,21 +99,29 @@ export default function Detail() {
             >
               Get Historical Data
             </button>
-            <button
+            {showChart && <button
               className="btn btn-info btn-sm w-40"
               onClick={() => getAIAnalysis()}
             >
               Start AI Analysis
-            </button>
+            </button>}
           </div>
         </div>
         <div className="w-3/4 flex flex-col items-center">
           <div className="w-full flex justify-end">
             {data?.prices && showChart && <PriceChart />}
           </div>
+          {rawAIAnalysis && 
           <div>
-            <p className="text-wrap">{AIAnalysis}</p>
-          </div>
+            <p className="text-wrap text-black"><span className="font-semibold">Coin Name:</span> {nameAIAnalysis}</p>
+            <p className="text-wrap text-black"><span className="font-semibold">Date Range:</span> {fromAIAnalysis} - {toAIAnalysis}</p>
+            <p className="text-wrap text-black mt-2 font-semibold">Performance Analysis:</p>
+            <p className="text-wrap text-black">{performanceAIAnalysis}</p>
+            <p className="text-wrap text-black mt-2 font-semibold">Prediction:</p>
+            <p className="text-wrap text-black">{predictionAIAnalysis}</p>
+            <p className="text-wrap text-black mt-2 font-semibold">Recommendation:</p>
+            <p className="text-wrap text-black">{recommendationAIAnalysis}</p>
+          </div>}
         </div>
       </div>
     </div>
