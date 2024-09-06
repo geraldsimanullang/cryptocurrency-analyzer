@@ -42,7 +42,7 @@ export const fetchHistoricalData = (coinName) => async (dispatch) => {
     dispatch(fetching());
 
     const { data } = await axios.get(
-      `https://cryptocurrency-analyzer.geraldsimanullang.site/${coinName}/historical-price-data/`, {
+      `https://cryptocurrency-analyzer.geraldsimanullang.site/coins/${coinName}/historical-price-data/`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`
         }
