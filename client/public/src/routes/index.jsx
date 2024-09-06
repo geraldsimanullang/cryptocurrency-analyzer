@@ -5,7 +5,7 @@ import Register from "../views/Register";
 import MyPortfolio from "../views/MyPortfolio";
 import Detail from "../views/Detail";
 
-const serverUrl = "http://localhost:300";
+const serverUrl = "http://35.185.177.26";
 
 const router = createBrowserRouter([
   {
@@ -20,11 +20,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/register",
-        element: <Register />,
+        element: <Register serverUrl={serverUrl}/>,
       },
       {
         path: "/login",
-        element: <Login />,
+        element: <Login serverUrl={serverUrl}/>,
       },
     ],
   },
@@ -40,15 +40,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <Home serverUrl={serverUrl}/>,
       },
       {
         path: "/my-portfolio",
-        element: <MyPortfolio />,
+        element: <MyPortfolio serverUrl={serverUrl}/>,
       },
       {
         path: "/coins/:name",
-        element: <Detail />,
+        element: <Detail serverUrl={serverUrl}/>,
       },
     ],
   },

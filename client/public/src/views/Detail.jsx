@@ -7,7 +7,7 @@ import axios from "axios";
 import PriceChart from "../components/PriceChart";
 import analyzingAnimation from "../assets/analyzingAnimation.svg"
 
-export default function Detail() {
+export default function Detail({serverUrl}) {
   const [coin, setCoin] = useState({});
   const [showChart, setShowChart] = useState(false);
   const [analyzing, setAnalyzing] = useState(false)
@@ -28,7 +28,7 @@ export default function Detail() {
 
   async function fetchCoin() {
     try {
-      const { data } = await axios.get(`http://localhost:3000/coins/${name}`, {
+      const { data } = await axios.get(`${serverUrl}/coins/${name}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
@@ -45,7 +45,7 @@ export default function Detail() {
     try {
       event.preventDefault()
 
-      const { data } = await axios.post(`http://localhost:3000/portfolio/${name}`, {}, {
+      const { data } = await axios.post(`${serverUrl}/portfolio/${name}`, {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`
         }
@@ -64,7 +64,7 @@ export default function Detail() {
       const dataInJson = JSON.stringify(data);
       const body = { dataInJson };
       const response = await axios.post(
-        `http://localhost:3000/coins/${name}/analysis`,
+        `${serverUrl}/coins/${name}/analysis`,
         body,
         {
           headers: {

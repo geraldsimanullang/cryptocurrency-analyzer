@@ -3,14 +3,14 @@ import Navbar from "../components/Navbar"
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 
-export default function MyPortfolio() {
+export default function MyPortfolio({serverUrl}) {
 
   const [portfolios, setPortfolios] = useState([]);
   const [notes, setNotes] = useState("")
 
   async function fetchPortfolios() {
     try {
-      const { data } = await axios.get(`http://localhost:3000/my-portfolio`, {
+      const { data } = await axios.get(`${serverUrl}/my-portfolio`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`
         }
@@ -28,7 +28,7 @@ export default function MyPortfolio() {
 
       const body = { notes }
 
-      const { data } = await axios.patch(`http://localhost:3000/portfolio/${portfolioId}`, body, {
+      const { data } = await axios.patch(`${serverUrl}/portfolio/${portfolioId}`, body, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`
         }
@@ -45,7 +45,7 @@ export default function MyPortfolio() {
   async function handleDeletePortfolio(portfolioId) {
     try {
 
-      await axios.delete(`http://localhost:3000/portfolio/${portfolioId}`, {
+      await axios.delete(`${serverUrl}/portfolio/${portfolioId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`
         }

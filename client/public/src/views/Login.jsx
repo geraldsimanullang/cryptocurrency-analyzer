@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from '@react-oauth/google';
 
-export default function Login() {
+export default function Login({serverUrl}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,7 +16,7 @@ export default function Login() {
       const body = { email, password };
 
       const { data } = await axios.post(
-        "http://localhost:3000/login",
+        `${serverUrl}/login`,
         body,
         {}
       );
@@ -32,7 +32,7 @@ export default function Login() {
   async function googleLogin(codeResponse) {
     try {
       const { data } = await axios.post(
-        `http://localhost:3000/google-login`, null, {
+        `${serverUrl}/google-login`, null, {
         headers: {
           token: codeResponse.credential
         }

@@ -4,12 +4,12 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import Card from "../components/Card";
 
-export default function Home() {
+export default function Home({serverUrl}) {
   const [coins, setCoins] = useState([]);
 
   async function fetchCoins() {
     try {
-      const { data } = await axios.get("http://localhost:3000/coins", {
+      const { data } = await axios.get(`${serverUrl}/coins`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
