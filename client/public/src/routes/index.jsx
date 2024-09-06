@@ -5,7 +5,7 @@ import Register from "../views/Register";
 import MyPortfolio from "../views/MyPortfolio";
 import Detail from "../views/Detail";
 
-const serverUrl = "http://35.185.177.26";
+const serverUrl = "https://cryptocurrency-analyzer.geraldsimanullang.site";
 
 const router = createBrowserRouter([
   {
